@@ -30,7 +30,7 @@ def client():
 
 
 
-def test_health_endpoint():
+def test_health_endpoint(client):
     """
     Verify that the application is ruuning and can respond to a health-check request
     """
@@ -40,7 +40,7 @@ def test_health_endpoint():
     assert response.json() == {"status": "healthy"}
     assert response.json()["model_version"] == "test-version"
 
-def test_valid_iris_prediction():
+def test_valid_iris_prediction(client):
     """
     Verify that we are getting valid predictions
     """
