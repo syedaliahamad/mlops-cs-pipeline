@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from main import create_app
 import pytest
 
+
 class FakeIrisModel:
     def predict(self, features):
         # Always return class 0
@@ -14,13 +15,13 @@ class FakeIrisModel:
 def fake_model_loader():
     return FakeIrisModel()
 
-
 def fake_version_loader():
     return "test-version"
 
+
 @pytest.fixture
 def client():
-    app=create_app(
+    app = create_app(
         model_loader=fake_model_loader,
         version_loader=fake_version_loader
     )
@@ -28,9 +29,7 @@ def client():
     with TestClient(app) as test_client:
         yield test_client
 
-
-
-def test_health_endpoint(client):
+def test_health_endpoint():
     """
     Verify that the application is ruuning and can respond to a health-check request
     """
@@ -40,7 +39,7 @@ def test_health_endpoint(client):
     assert response.json() == {"status": "healthy"}
     assert response.json()["model_version"] == "test-version"
 
-def test_valid_iris_prediction(client):
+def test_valid_iris_prediction():
     """
     Verify that we are getting valid predictions
     """
@@ -63,5 +62,3 @@ def test_valid_iris_prediction(client):
 
     assert result["class_name"] in ["setosa", "versicolor", "virginica"]
     assert result["prediction"] in [0, 1, 2]
-
-
