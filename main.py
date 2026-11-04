@@ -67,9 +67,11 @@ def create_app(
         lifespan=lifespan
     )
 
-    @app.get("/")
-    def health_check():
-        return {"message": "API is ready to serve..."}
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy"
+    }
 
     @app.get("/health")
     def health_check():
