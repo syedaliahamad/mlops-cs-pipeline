@@ -62,23 +62,19 @@ def create_app(
 
     app = FastAPI(
         title="Iris Classification API",
-        description="Iris prediction API powered by MLFlow",
+        description="Iris prediction API powered by MLflow",
         version="3.0.0",
         lifespan=lifespan
     )
 
-@app.get("/health")
-def health_check():
-    return {
-        "status": "healthy"
-    }
+    @app.get("/")
+    def root():
+        return {"message": "API is ready to serve..."}
 
     @app.get("/health")
     def health_check():
         return {
-            "status": "healthy",
-            "model_name": "iris-classifier",
-            "model_version": app.state.model_version
+            "status": "healthy"
         }
 
     @app.post("/predict")
